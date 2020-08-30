@@ -2,5 +2,5 @@
 Python asyncio based web server 
 
 Redis setup:
-flushall
-set uids 1
+#flushall
+#set uids 1
