@@ -1,1 +1,76 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>S 4 L E H </title>
+	
+	
+	
+	
+</head>
+<body>
+ 
+    {% if not token %}
+	
+    <form method="post" action="/giris.slh">
+        <table>
+            <tr>
+                <td><label for="loginField">Eposta</label></td>
+                <td><input id="loginField" type="text" name="eposta" required></td>
+            </tr>
+            <tr>
+                <td><label for="passwordField">Şifre:</label></td>
+                <td><input id="passwordField" type="password" name="sifre" required></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center"><input type="submit" value="Giriş"></td>
+            </tr>
+        </table>
+    </form>
+    <p><a href="/kayit">Hesap Oluştur</a></p>{% else %}<input id="clickMe" type="button" value="Oyna" onclick="start();"/>
+    <a style="display: none;" id="flash" href="https://get.adobe.com/flashplayer">Flash Çalıştır</a>
+    <div id="flashContent"></div>
+    <br>
+ 
+    <a href="/cikis.slh">Çıkış Yap</a>
+    <script>
+        function start(){
+            document.getElementById('clickMe').style.display = "none";
+            if (swfobject.getFlashPlayerVersion().major == 0){
+                document.getElementById('flash').style.display = "block";
+                return;
+            }
+            var vars = {};
+			
+            vars['config'] = '/appconfig.xml';
+            vars['versions'] = '/files/versions.json?{{ update_time }}';
+            vars['appSwf'] = '/files/pnz-city.swf?{{ update_time }}';
+            var flashVars = [];
+            for (var variable in vars) {
+                flashVars.push(variable + '=' + vars[variable]);
+            }
+            var params = {
+                flashvars: flashVars.join("&"),
+                allowfullscreen: "true",
+                allowscriptaccess: "always",
+                allowFullScreenInteractive: "true",
+                allownetworking: "all",
+                wmode: "transparent"
+            };
+            var el = document.getElementById("flashContent");
+            swfobject.embedSWF("/files/pnz-city-container.swf", el, 1280, 720, 10, null, null, params, {name: "flashContent"});
+        }
+    </script>
+	
+	
+	<hr>
+	
+	<form method="POST" action="/sifre_degistir.slh">
+    <input type="text" name="sifre" placeholder="Eski şifre.">
+    <input type="text" name="yeni_sifre" placeholder="Yeni şifre.">
+    <input type="submit">	
+	</form>
+    <script type="text/javascript" src="/files/swfobject.js"></script>{% endif %}
+</body>
+</html>
