@@ -112,6 +112,7 @@ async def basarisiz(request):
 @routes.post("/kayit_ol.slh")
 async def kayit_ol(request):
     data = await request.post()
+    ad_soyad = data["ad_soyad"]
     eposta = data["eposta"]
     sifre = data["sifre"]
     bbcode = random_string()
@@ -122,7 +123,7 @@ async def kayit_ol(request):
             devam = False
             break
     if devam == True:
-      s4_uid, s4_sifre = s4_kayit.hesap_olustur(app["redis"], eposta, sifre, bbcode)
+      s4_uid, s4_sifre = s4_kayit.hesap_olustur(app["redis"], eposta, sifre, bbcode, ad_soyad)
       session = await aiohttp_session.new_session(request)
       session["uid"] = s4_uid
       session["token"] = s4_sifre

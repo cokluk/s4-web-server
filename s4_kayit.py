@@ -2,7 +2,7 @@
 import random
 
 
-def hesap_olustur(redis, eposta, sifre, bbcode):
+def hesap_olustur(redis, eposta, sifre, bbcode, ad_soyad):
     
     redis.incr("uids")
     uid = redis.get("uids")
@@ -10,6 +10,7 @@ def hesap_olustur(redis, eposta, sifre, bbcode):
     pipe.set(f"auth:{bbcode}", uid)
     pipe.set(f"uid:{uid}:slvr", 1000)
     pipe.set(f"uid:{uid}:gld", 6)
+    pipe.set(f"uid:{uid}:ad_soyad", ad_soyad)
     pipe.set(f"uid:{uid}:sifre", bbcode)
     pipe.set(f"uid:{uid}:mail", eposta)
     pipe.set(f"uid:{uid}:panelsifre", sifre)
