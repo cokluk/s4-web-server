@@ -54,6 +54,8 @@ async def index(request):
         context["token"] = session["token"]
         context["update_time"] = guncelleme_zamani
         context["gameid"] = session["uid"]
+        uid = session["uid"]
+        context["isim"] = app["redis"].get(f"uid:{uid}:ad_soyad")
     return aiohttp_jinja2.render_template("index.html", request,
                                           context=context)
 
