@@ -101,6 +101,22 @@ async def sifre_degistir(request):
         app["redis"].set(f"uid:{v}:panelsifre", yeni_sifre)
     return web.Response(text=sifre_d)
 
+
+
+@routes.post("/sifirla.slh")
+async def sifre_degistir(request):
+    session = await aiohttp_session.get_session(request)
+    data = await request.post()
+    sifre = data["sifre"]
+    v = session["uid"]
+    sifre_d = "Şifre eşleşmiyor."
+    if sifre == app["redis"].get(f"uid:{v}:panelsifre"):
+        s4_kayit.sifirla(app["redis"], uid)
+        sifre_d = "Hesabınız başarılı şekilde sıfırlandı."
+    return web.Response(text=sifre_d)
+
+
+
 def random_string(string_length=20):
     letters = string.ascii_letters
     return ''.join(random.choice(letters) for i in range(string_length))
